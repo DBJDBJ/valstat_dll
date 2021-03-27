@@ -23,8 +23,8 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	{
 	case DLL_PROCESS_ATTACH:
 	case DLL_THREAD_ATTACH:
-		BOOL failed = DisableThreadLibraryCalls(hModule);
-		_ASSERTE(!failed);
+		/*BOOL failed =*/ DisableThreadLibraryCalls(hModule);
+		/*_ASSERTE(failed);*/
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
 		break;
@@ -110,6 +110,7 @@ int waveformat(void* const pWaveFormatex)
 	WAVEFORMATEX* wfxp_ = (WAVEFORMATEX*)pWaveFormatex;
 	(void)wfxp_;
 #endif
-	return memcpy(pWaveFormatex, &wfx, sizeof(wfx));
+	memcpy(pWaveFormatex, &wfx, sizeof(wfx));
+	return 42;
 }
 
