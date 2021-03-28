@@ -179,6 +179,11 @@
     <None Include=".gitignore" />
     <None Include="readme.md" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h" />
+    <ClInclude Include="compiler_string.h" />
+    <ClInclude Include="waveformat.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
