@@ -1,4 +1,15 @@
 #pragma once
+
+#ifdef __cpluplus
+#error compile this project as C not C++
+#endif
+
+// min supported OS is WIN10
+#define WINVER 0x0A00
+#define _WIN32_WINNT 0x0A00
+// _WIN32_WINNT_WIN10 equals 0x0A00
+// but not before sdkddkver.h is included 
+
 #define WIN32_LEAN_AND_MEAN 
 #define STRICT 1
 #include <windows.h>
@@ -11,6 +22,7 @@
 // must not use static runtime, reason is:
 // using DisableThreadLibraryCalls(hModule);
 #include <crtdbg.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -39,7 +51,7 @@
 #       include <crtdbg.h>
 #       define STATIC_ASSERT_MSG(expr, msg) _STATIC_ASSERT(expr)
 #   elif (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L) \
-          || __has_feature(c_static_assert)
+		  || __has_feature(c_static_assert)
 #       define STATIC_ASSERT_MSG(expr, msg) _Static_assert(expr, msg)
 #   else
 #       define STATIC_ASSERT_MSG(expr, msg) switch (0) {case 0:case (expr):;}
@@ -51,3 +63,14 @@
 #endif
 
 #define OK_VAL 42
+
+inline HMODULE handle_store(HMODULE h_module)
+{
+	static HMODULE stored_handle = NULL;
+
+	if (stored_handle == NULL)
+		if (h_module != NULL)
+			stored_handle = h_module;
+
+	return stored_handle;
+}

@@ -8,12 +8,15 @@
 //
 #include "compiler_string.h"
 #include "waveformat.h"
+#include "safe_division.h"
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
 	LPVOID lpReserved
 )
 {
+	handle_store(hModule);
+
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
