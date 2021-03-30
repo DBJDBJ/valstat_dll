@@ -29,24 +29,16 @@ __declspec(dllexport) int compiler_string(wchar_t* const cs_string_p_, int strin
 }
 
 /*
-In C# this function is declared as:
+* C# declared as
 
-[DllImport(@"<full path>\valstat_dll.dll"
-			, EntryPoint = "this_name",
-			CharSet = CharSet.Unicode,
-			ExactSpelling = true,
-			SetLastError = true)]
-static extern bool this_name([Out] char[] string_, Int32 string_length_);
-
-thus we can use windows SetLastError() to signal the error to the caller
-not as rich as valstat but works
+[DllImport(valstat_dll_location, EntryPoint = "this_name", CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
+static extern bool this_name([MarshalAs(UnmanagedType.LPWStr)] string name_, Int32 string_length_);
 
 */
-__declspec(dllexport) int this_name(wchar_t* const cs_string_p_, int string_len_)
+__declspec(dllexport) BOOL this_name(wchar_t* const cs_string_p_, int* string_len_)
 {
 
-	ASSERT(cs_string_p_ != NULL); // remember: this is C code, not C++ hence the 'NULL'
-	ASSERT(string_len_ > 1);
+	ASSERT(string_len_ != NULL); // remember: this is C code, not C++ hence the 'NULL'
 
 	wchar_t const this_name_[1024] = { L'\0' };
 
@@ -56,9 +48,22 @@ __declspec(dllexport) int this_name(wchar_t* const cs_string_p_, int string_len_
 		return FALSE;
 	}
 	const size_t this_name_len_ = wcslen(this_name_);
-	ASSERT(this_name_len_ < string_len_);
 
-	int rezult = swprintf_s(cs_string_p_, string_len_, L"%s", this_name_);
+	if (cs_string_p_ == NULL)
+	{ // caller just wanted the size
+		*string_len_ = (1 + this_name_len_);
+		return TRUE;
+	}
+
+#ifdef _DEBUG
+	size_t len_control = wcslen(cs_string_p_);
+	ASSERT(len_control == *string_len_);
+#endif // DEBUG
+
+	ASSERT(this_name_len_ < *string_len_);
+
+	int rezult = swprintf_s(cs_string_p_, *string_len_, L"%s", this_name_);
+	wchar_t wot = cs_string_p_[this_name_len_];
 
 	return rezult > 0; // used as true or false by the callers
 }

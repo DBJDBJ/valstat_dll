@@ -43,8 +43,7 @@ unsafe struct int_charr_pair
 
 static enum { icp_data_count = 255 };
 
-typedef struct
-{
+typedef struct {
 	int val;
 	char data[icp_data_count];
 } int_charr_pair;
@@ -53,7 +52,7 @@ __declspec(dllexport) void safe_division_2(int_charr_pair* vst_ptr, int numerato
 {
 	ASSERT(vst_ptr);
 
-	const char* const message_ = "Jupi!";
+	static const char  message_[] = { "HELLO FROM DLL" };
 	const size_t const message_len_ = strlen(message_);
 
 	vst_ptr->val = 42;
@@ -63,18 +62,19 @@ __declspec(dllexport) void safe_division_2(int_charr_pair* vst_ptr, int numerato
 	ASSERT(rez > 1);
 }
 
+/// <summary>
+///  using callbacks seems more maleable as a C# interop mechanism
+/// </summary>
 typedef void (*safe_division_fp)(int_charr_pair*);
 
 __declspec(dllexport) void safe_division_cb(safe_division_fp callback_, int numerator, int denominator)
 {
 	ASSERT(callback_); // never fails
 
-	const char* const message_ = "Jupi!";
+	static const char  message_[] = { "HELLO FROM DLL" };
 	const size_t const message_len_ = strlen(message_);
 
-	int_charr_pair icp = { 0,{0} };
-
-	icp.val = 42;
+	int_charr_pair icp = { 42 ,{0} };
 
 	int rez = sprintf_s(icp.data, icp_data_count, "%s", message_);
 
