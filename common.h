@@ -31,7 +31,7 @@
 
 #define ASSERT _ASSERTE
 
-#define ARRAY_LENGTH(array) __countof(array)
+#define ARRAY_LENGTH(array) _countof(array)
 #define ARRAY_END(array) (&array[ARRAY_LENGTH(array)])
 
 // vcruntime.h contains all the necessary macros
