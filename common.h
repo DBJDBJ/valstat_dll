@@ -22,6 +22,7 @@
 // must not use static runtime, reason is:
 // using DisableThreadLibraryCalls(hModule);
 #include <crtdbg.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
