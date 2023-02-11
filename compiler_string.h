@@ -47,7 +47,7 @@ __declspec(dllexport) BOOL this_name(wchar_t* const cs_string_p_, int* string_le
 	}
 	const size_t this_name_len_ = wcslen(this_name_);
 
-	if (cs_string_p_ == NULL)
+	if ((cs_string_p_ == NULL) || (cs_string_p_[0] == L'\0'))
 	{ // caller just wanted the size
 		*string_len_ = (1 + this_name_len_);
 		return TRUE;
