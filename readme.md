@@ -3,13 +3,39 @@
 
 Windows native DLL specimen, implementing (very) few (very) simple valstat enabled functions.
 
-## The Purpose
+## Building & Using
+
+Use Visual Studio. After build event will xcopy the resulting 
+
+`valstat_dll.dll` 
+
+to 
+
+`C:\Users\<your user name>\.valstat\valstat_dll.dll`
+
+This is **important** as this is the location you need to specify when using this dll from various other projects when testing the valstat.
+
+For example in [valstat/valstat_csharp](https://github.com/valstat/valstat_csharp) in a file [valstat_csharp/demo/valstat_dll.cs](https://github.com/valstat/valstat_csharp/blob/master/demo/valstat_dll.cs), we type:
+
+```c#
+namespace dbj
+{
+    internal class valstat_dll
+    {
+        const string valstat_dll_location = @"C:\Users\<your user name>\.valstat\valstat_dll.dll";
+```
+
+
+
+## The Purpose of VALSTAT
 
 > [valstat](https://github.com/DBJDBJ/valstat) is language agnostic call/response protocol
 
+One could say: for people who do not want to use exceptions. 
+
 The purpose of this dll is to show valstat interop with various projects and languages who can run on Windows and load and use this DLL.
 
-Thus it does not contains "snazzy, whiz-bang" code. It shows the valstat usage and malleability.
+Thus it does not contains "snazzy, whiz-bang" code. It shows the valstat usability and malleability.
 
 *(Roadmap: that is not stopping me to show the fastest possible Fibonacci generator, valstat enabled)*
 
