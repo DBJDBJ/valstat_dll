@@ -21,7 +21,7 @@ __declspec(dllexport) int compiler_string(wchar_t* const cs_string_p_, int strin
 	// at this point string_len_ > compiler_string_len_
 	// that matters because L'\0' will have to be appended to the cs_str_
 	int rezult = swprintf_s(cs_string_p_, string_len_, L"%s", compiler_string_);
-	return rezult > 0; // used as true or false by the callers
+	return rezult ; 
 }
 
 /*
